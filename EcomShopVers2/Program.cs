@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EcommShopVer2
+namespace EcomShopVers2
 {
     public class Program
     {
