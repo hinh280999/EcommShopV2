@@ -1,4 +1,5 @@
 using EcommShop.DataAccessor.DBContext;
+using ECommShop.Business;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace EcomShopVers2
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EcomShopVers2", Version = "v1" });
