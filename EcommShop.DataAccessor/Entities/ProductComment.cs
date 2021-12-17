@@ -1,6 +1,6 @@
 ﻿namespace EcommShop.DataAccessor.Entities
 {
-    public class ProductComment
+    public class ProductComment : BaseEntity
     {
         public string Content { get; set; }
         public int UserId { get; set; }
