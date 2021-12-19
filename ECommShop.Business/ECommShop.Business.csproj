@@ -5,12 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business.Interface\" />
-    <Folder Include="Buisiness.Repository\" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <ProjectReference Include="..\EcommShop.Contracts\EcommShop.Contracts.csproj" />
+    <ProjectReference Include="..\EcommShop.DataAccessor\EcommShop.DataAccessor.csproj" />
   </ItemGroup>
 
 </Project>

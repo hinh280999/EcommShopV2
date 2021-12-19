@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EcommShop.Contracts.Dtos.User;
+using EcommShop.DataAccessor.Entities;
 
 namespace ECommShop.Business
 {
@@ -6,6 +8,7 @@ namespace ECommShop.Business
     {
         public AutoMapperProfile()
         {
+            CreateMap<UserInfoDto, User>();
         }
     }
 }

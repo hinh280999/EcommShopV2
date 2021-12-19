@@ -1,5 +1,7 @@
 using EcommShop.DataAccessor.DBContext;
 using ECommShop.Business;
+using ECommShop.Business.Buisiness.Repository;
+using ECommShop.Business.Business.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +29,10 @@ namespace EcomShopVers2
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
+
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EcomShopVers2", Version = "v1" });
@@ -40,8 +45,9 @@ namespace EcomShopVers2
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcomShopVers2 v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EcomShopVers2"));
             }
 
             app.UseHttpsRedirection();

@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcomShopVers2", "EcomShopVers2.csproj", "{DE12929E-6581-4946-8969-9453DF99687F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommShop.DataAccessor", "..\EcommShop.DataAccessor\EcommShop.DataAccessor.csproj", "{317E6954-925F-4AE4-87D0-0E090A10F209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommShop.DataAccessor", "..\EcommShop.DataAccessor\EcommShop.DataAccessor.csproj", "{317E6954-925F-4AE4-87D0-0E090A10F209}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommShop.Business", "..\ECommShop.Business\ECommShop.Business.csproj", "{634FA2E4-69C6-4AD3-B413-08CC81DB9CCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ECommShop.Business", "..\ECommShop.Business\ECommShop.Business.csproj", "{634FA2E4-69C6-4AD3-B413-08CC81DB9CCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommShop.Contracts", "..\EcommShop.Contracts\EcommShop.Contracts.csproj", "{675946D3-731E-4780-836D-120510F897A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommShop.Contracts", "..\EcommShop.Contracts\EcommShop.Contracts.csproj", "{675946D3-731E-4780-836D-120510F897A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
