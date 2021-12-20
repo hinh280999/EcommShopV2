@@ -10,8 +10,9 @@ namespace ECommShop.Business.Business.Interface
     public interface IUserRepository
     {
         Task<UserInfoDto> getUserByIdAsync(int id);
-        Task<UserInfoDto> addUserAsync(UserInfoDto addObj);
+        Task<UserInfoDto> addUserAsync(UserCreateDto addObj);
         Task<bool> updateUserAsync(UserInfoDto updateObj);
         Task<bool> deleteUserByIdAsync(int id);
+        Task<bool> changePasswordAsync(string username, string oldPassword, string newPassword);
     }
 }

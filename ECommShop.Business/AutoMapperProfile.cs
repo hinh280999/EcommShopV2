@@ -9,6 +9,8 @@ namespace ECommShop.Business
         public AutoMapperProfile()
         {
             CreateMap<UserInfoDto, User>();
+
+            CreateMap<User, UserInfoDto>();
         }
     }
 }

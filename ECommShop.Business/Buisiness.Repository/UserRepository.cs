@@ -20,38 +20,78 @@ namespace ECommShop.Business.Buisiness.Repository
             _mapper = mapper;
         }
 
-        public async Task<UserInfoDto> addUserAsync(UserInfoDto addObj)
+        public async Task<UserInfoDto> addUserAsync(UserCreateDto addObjDti)
         {
-            if (await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == addObj.Username) != null)
+            if (await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == addObjDti.Username) != null)
                 throw new Exception("Username already exist in database");
 
-            User addEntity = _mapper.Map<User>(addObj);
-            addObj.CreatedTime = DateTime.Now;
-            addObj.UpdatedTime = DateTime.Now;
+            User addEntity = _mapper.Map<User>(addObjDti);
+
+            addEntity.CreatedTime = DateTime.Now;
+            addEntity.UpdatedTime = DateTime.Now;
+            addEntity.Active = true;
 
             await _dbContext.Users.AddAsync(addEntity);
             await _dbContext.SaveChangesAsync();
 
-            addObj.Id = addEntity.Id;
-            addObj.CreatedTime = addEntity.CreatedTime;
-            addObj.UpdatedTime = addEntity.UpdatedTime;
-
-            return addObj;
+            UserInfoDto userInfo = _mapper.Map<UserInfoDto>(addEntity);
+            return userInfo;
         }
 
-        public Task<bool> deleteUserByIdAsync(int id)
+        public async Task<bool> deleteUserByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var userInDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (userInDb == null)
+                throw new Exception("Cant find user with id : " + id);
+            userInDb.Active = false;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<UserInfoDto> getUserByIdAsync(int id)
+        public async Task<UserInfoDto> getUserByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var userInDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == id && x.Active == true);
+
+            if (userInDb == null)
+                throw new Exception("Cant find user with id : " + id);
+
+            UserInfoDto userInfoDto = _mapper.Map<UserInfoDto>(userInDb);
+            return userInfoDto;
         }
 
-        public Task<bool> updateUserAsync(UserInfoDto updateObj)
+        public async Task<bool> updateUserAsync(UserInfoDto updateObj)
         {
-            throw new NotImplementedException();
+            var userInDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == updateObj.Id && x.Active == true);
+
+            if (userInDb == null)
+                throw new Exception("Cant find user with id : " + updateObj.Id);
+
+            userInDb.FirstName = updateObj.FirstName;
+            userInDb.LastName = updateObj.LastName;
+            userInDb.PhoneNumber = updateObj.PhoneNumber;
+            userInDb.UpdatedTime = DateTime.Now;
+            userInDb.Email = updateObj.Email;
+            userInDb.Addresss = updateObj.Addresss;
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> changePasswordAsync (string username, string oldPassword, string newPassword)
+        {
+            var userInDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == username && x.Active == true);
+
+            if (userInDb == null)
+                throw new Exception("Cant find user with username : " + username);
+            if (userInDb.Password != oldPassword)
+                throw new Exception("Old Password not match : " + oldPassword);
+
+            userInDb.Password = newPassword;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }
