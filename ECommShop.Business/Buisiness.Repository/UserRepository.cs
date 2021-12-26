@@ -22,7 +22,8 @@ namespace ECommShop.Business.Buisiness.Repository
 
         public async Task<UserInfoDto> addUserAsync(UserCreateDto addObjDti)
         {
-            if (await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == addObjDti.Username) != null)
+            var userinDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == addObjDti.Username);
+            if (userinDb != null) 
                 throw new Exception("Username already exist in database");
 
             User addEntity = _mapper.Map<User>(addObjDti);
