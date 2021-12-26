@@ -8,7 +8,7 @@ namespace ECommShop.Business
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserInfoDto, User>();
+            CreateMap<UserCreateDto, User>();
 
             CreateMap<User, UserInfoDto>();
         }

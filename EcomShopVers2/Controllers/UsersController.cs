@@ -1,6 +1,7 @@
 ﻿using EcommShop.Contracts.Dtos.User;
 using ECommShop.Business.Business.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace EcomShopVers2.Controllers
@@ -23,8 +24,8 @@ namespace EcomShopVers2.Controllers
                 var result = await _userRepository.addUserAsync(addUserDto);
                 return Ok(result);
             }
-            catch {
-                return BadRequest();
+            catch (Exception e){
+                return BadRequest(e.Message);
             }
         }
 
