@@ -22,7 +22,7 @@ namespace ECommShop.Business.Helpers
 
             var claims = new[] {
                 new Claim("Id", user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email.ToString()),
+                new Claim(ClaimTypes.Email, user.Email.ToString()),
                 new Claim(ClaimTypes.Role, user.UserType.ToString()),
                 new Claim("FirstName" , user.FirstName.ToString()),
                 new Claim("LastName" , user.LastName.ToString()),
