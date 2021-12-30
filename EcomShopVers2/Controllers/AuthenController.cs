@@ -1,8 +1,6 @@
-﻿using ECommShop.Business.Business.Interface;
+﻿using EcommShop.Contracts.Dtos.User;
+using ECommShop.Business.Business.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace EcomShopVers2.Controllers
@@ -20,13 +18,14 @@ namespace EcomShopVers2.Controllers
 
 
         [HttpPost("authenticateUser")]
-        public async Task<IActionResult> AuthenticateUser (string username, string password)
+        public async Task<IActionResult> AuthenticateUser ([FromForm] UserLoginDto logInDto)
         {
+            if (!ModelState.IsValid) return BadRequest("must right UserLogInDto form");
             try
             {
-                var access_token = await _authRepository.AuthenticateUser(username, password);
+                var access_token = await _authRepository.AuthenticateUser(logInDto.userName, logInDto.userPassword);
                 return Ok(new { access_token });
-            }catch (Exception e)
+            }catch
             {
                 return BadRequest("User not exist or wrong password");
             }
