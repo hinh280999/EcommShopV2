@@ -1,0 +1,128 @@
+﻿.product-item {
+    text-align: center;
+    padding: 24px;
+}
+
+    .product-item:hover .product-name {
+        color: red;
+        transition: ease .3s;
+    }
+
+    .product-item:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+        .product-item:hover .product-image {
+            filter: brightness(105%);
+        }
+
+.img-box {
+    overflow: hidden;
+}
+
+    .img-box .product-image {
+        max-width: 100%;
+        transition: all 1s;
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    .img-box:hover .product-image {
+        -webkit-transform: scale(1.1);
+        transform: scale(1.1);
+    }
+
+.product-name {
+    color: black;
+    padding-top: 10px;
+}
+
+.product-price {
+    color: black;
+}
+
+.product-button {
+    transition: ease .7s;
+}
+
+    .product-button:hover {
+        background-color: white;
+        border: 1px black solid;
+        color: black;
+    }
+
+.miniBanner {
+    position: relative;
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    padding:0px;
+}
+
+    .miniBanner > h2 {
+        position: absolute;
+        top: 80px;
+        width: 100%;
+    }
+
+    .miniBanner h2 span {
+        color: #fff;
+        letter-spacing: -1px;
+        background: rgba(0, 0, 0, .6);
+        padding: 10px;
+    }
+
+.policyCate-item ::before {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 95%;
+    background: #edeff2;
+    bottom: 0;
+    right: -2%;
+    top: 1%;
+}
+
+
+/*Product rating custom */
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+
+    .rate:not(:checked) > input {
+        position: absolute;
+        top: -9999px;
+    }
+
+    .rate:not(:checked) > label {
+        float: right;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 30px;
+        color: #ccc;
+    }
+
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+
+    .rate > input:checked ~ label {
+        color: #ffc700;
+    }
+
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;
+    }
+
+    .rate > input:checked + label:hover,
+    .rate > input:checked + label:hover ~ label,
+    .rate > input:checked ~ label:hover,
+    .rate > input:checked ~ label:hover ~ label,
+    .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+    }
