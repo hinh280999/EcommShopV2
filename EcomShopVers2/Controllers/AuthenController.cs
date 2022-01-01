@@ -18,13 +18,13 @@ namespace EcomShopVers2.Controllers
 
 
         [HttpPost("authenticateUser")]
-        public async Task<IActionResult> AuthenticateUser ([FromForm] UserLoginDto logInDto)
+        public async Task<IActionResult> AuthenticateUser (UserLoginDto logInDto)
         {
             if (!ModelState.IsValid) return BadRequest("must right UserLogInDto form");
             try
             {
                 var access_token = await _authRepository.AuthenticateUser(logInDto.userName, logInDto.userPassword);
-                return Ok(new { access_token });
+                return Ok(access_token);
             }catch
             {
                 return BadRequest("User not exist or wrong password");

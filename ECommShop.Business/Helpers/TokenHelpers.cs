@@ -24,8 +24,7 @@ namespace ECommShop.Business.Helpers
                 new Claim("Id", user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email.ToString()),
                 new Claim(ClaimTypes.Role, user.UserType.ToString()),
-                new Claim("FirstName" , user.FirstName.ToString()),
-                new Claim("LastName" , user.LastName.ToString()),
+                new Claim(ClaimTypes.Name, user.FirstName + user.LastName),
                 new Claim("PhoneNumber" , user.PhoneNumber.ToString()),
                 new Claim("Addresss" , user.Addresss.ToString()),
             };

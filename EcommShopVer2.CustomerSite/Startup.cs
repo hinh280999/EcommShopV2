@@ -1,3 +1,6 @@
+using EcommShopVer2.CustomerSite.Services.ApiClient.Impiment;
+using EcommShopVer2.CustomerSite.Services.ApiClient.Interface;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -23,7 +26,18 @@ namespace EcommShopVer2.CustomerSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient("EcommBeApiClient", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(Configuration["EcommShopBeApiUrl"]);
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            services.AddTransient<IAuthApiClient, AuthApiClient>();
+
             services.AddControllersWithViews();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +58,7 @@ namespace EcommShopVer2.CustomerSite
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

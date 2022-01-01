@@ -9,8 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\ApiClient\Interface\" />
-    <Folder Include="Services\ApiClient\Impiment\" />
     <Folder Include="Services\SessionExtention\" />
   </ItemGroup>
 
