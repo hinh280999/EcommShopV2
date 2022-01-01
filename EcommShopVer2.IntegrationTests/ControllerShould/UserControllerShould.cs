@@ -20,6 +20,7 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
         private readonly IMapper _mapper;
         private SqliteConnection _connection;
         private EcommShopDBContext _dbContext;
+        private UsersController usersController;
 
         public UserControllerShould()
         {
@@ -35,6 +36,7 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
             _mapper = config.CreateMapper();
 
             _userRepository = new UserRepository(_dbContext, _mapper);
+            usersController = new UsersController(_userRepository);
 
 
         }
@@ -42,8 +44,6 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
         [Fact]
         public async Task Add_NewUSer_Success()
         {
-            var usersController = new UsersController(_userRepository);
-
             UserCreateDto userCreateDto = new UserCreateDto();
             userCreateDto.FirstName = "FirstName";
             userCreateDto.LastName = "LastName";
@@ -61,6 +61,111 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
 
             Assert.NotNull(userInfoResult);
             Assert.Equal(userCreateDto.Email, userInfoResult.Email);
+        }
+
+        [Fact]
+        public async Task Add_NewUSer_Fail_UsernameExist()
+        {
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.AddUser(userCreateDto);
+
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            var errorMessage = Assert.IsType<string>(badRequest.Value);
+
+            Assert.NotNull(errorMessage);
+        }
+
+        [Fact]
+        public async Task Get_User_ById_Success()
+        {
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = true;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.GetUserById(dataUser.Id);
+
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var userInfoResult = Assert.IsType<UserInfoDto>(okResult.Value);
+
+            Assert.NotNull(userInfoResult);
+            Assert.Equal(userInfoResult.Username, dataUser.Username);
+        }
+
+        [Fact]
+        public async Task Get_User_ById_Fail_NotFound_Id()
+        {
+            int notFoundId = 9999;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = true;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.GetUserById(notFoundId);
+
+            var notFoundRusult = Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task Get_User_ById_Fail_Not_Active()
+        {
+            bool isNotActive = false;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isNotActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.GetUserById(dataUser.Id);
+
+            Assert.IsType<NotFoundResult>(result);
         }
     }
 }
