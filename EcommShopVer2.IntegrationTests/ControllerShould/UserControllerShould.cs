@@ -167,5 +167,111 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
 
             Assert.IsType<NotFoundResult>(result);
         }
+
+        [Fact]
+        public async Task ActivateUser_Success()
+        {
+            bool isNotActive = false;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isNotActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.ActivateUser(dataUser.Id);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var activeResult = Assert.IsType<bool>(okResult.Value);
+
+            Assert.True(activeResult);
+        }
+
+        [Fact]
+        public async Task ActivateUser_Fail_NotFoundID_Active()
+        {
+            bool isActive = true;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.ActivateUser(dataUser.Id);
+            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public async Task DeActivateUser_Success()
+        {
+            bool isActive = true;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.DeActivateUser(dataUser.Id);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var activeResult = Assert.IsType<bool>(okResult.Value);
+
+            Assert.True(activeResult);
+        }
+
+        [Fact]
+        public async Task DeActivateUser_Fail_NotFoundID_Nott_Active()
+        {
+            bool isActive = false;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.DeActivateUser(dataUser.Id);
+            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+        }
     }
 }
