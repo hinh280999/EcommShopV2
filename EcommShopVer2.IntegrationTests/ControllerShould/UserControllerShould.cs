@@ -273,5 +273,85 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
             var result = await usersController.DeActivateUser(dataUser.Id);
             var notFoundResult = Assert.IsType<NotFoundResult>(result);
         }
+
+        [Fact]
+        public async Task Change_User_Password_Success()
+        {
+            string newPassword = "newPassword";
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = true;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.ChangePassword("Admin001", "myPassword001", newPassword);
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var userData = Assert.IsType<bool>(okResult.Value);
+
+            Assert.True(userData);
+        }
+
+        [Fact]
+        public async Task Change_User_Password_Fail_NotFound_User()
+        {
+            string notFound_UserName = "name";
+            bool isActive = false;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.ChangePassword(notFound_UserName, "myPassword001", "newPassword");
+            var badRequestResult = Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public async Task Change_User_Password_Fail_OldPassword_Not_Match()
+        {
+            string wrongOldPassword = "wrongPassword";
+            bool isActive = true;
+
+            UserCreateDto userCreateDto = new UserCreateDto();
+            userCreateDto.FirstName = "FirstName";
+            userCreateDto.LastName = "LastName";
+            userCreateDto.Email = "Email@gmail.com";
+            userCreateDto.PhoneNumber = "0981986252";
+            userCreateDto.Addresss = "Address";
+            userCreateDto.Username = "Admin001";
+            userCreateDto.Password = "myPassword001";
+            userCreateDto.UserType = UserType.ADMIN;
+
+            User dataUser = _mapper.Map<User>(userCreateDto);
+            dataUser.Active = isActive;
+
+            await _dbContext.Users.AddAsync(dataUser);
+            await _dbContext.SaveChangesAsync();
+
+            var result = await usersController.ChangePassword("Admin001", wrongOldPassword, "newPassword");
+            var badRequestResult = Assert.IsType<BadRequestResult>(result);
+        }
     }
 }
