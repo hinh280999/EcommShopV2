@@ -59,12 +59,26 @@ namespace EcomShopVers2.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("/api/deactivate-user/{id}")]
         public async Task<ActionResult> DeActivateUser(int id)
         {
             try
             {
-                var result = await _userRepository.deleteUserByIdAsync(id);
+                var result = await _userRepository.deActivateUserByIdAsync(id);
+                return Ok(result);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("/api/activate-user/{id}")]
+        public async Task<ActionResult> ActivateUser(int id)
+        {
+            try
+            {
+                var result = await _userRepository.activateUserByIdAsync(id);
                 return Ok(result);
             }
             catch

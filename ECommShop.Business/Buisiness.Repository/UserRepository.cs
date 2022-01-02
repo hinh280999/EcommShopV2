@@ -94,5 +94,31 @@ namespace ECommShop.Business.Buisiness.Repository
 
             return true;
         }
+
+        public async Task<bool> deActivateUserByIdAsync(int userId)
+        {
+            var userInDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId && x.Active == true);
+
+            if (userInDb == null)
+                throw new Exception("Cant find user with id : " + userId);
+
+            userInDb.Active = false;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> activateUserByIdAsync(int userId)
+        {
+            var userInDb = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId && x.Active == false);
+
+            if (userInDb == null)
+                throw new Exception("Cant find user with id : " + userId);
+
+            userInDb.Active = true;
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

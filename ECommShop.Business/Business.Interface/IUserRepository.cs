@@ -14,5 +14,7 @@ namespace ECommShop.Business.Business.Interface
         Task<bool> updateUserAsync(UserInfoDto updateObj);
         Task<bool> deleteUserByIdAsync(int id);
         Task<bool> changePasswordAsync(string username, string oldPassword, string newPassword);
+        Task<bool> deActivateUserByIdAsync(int userId);
+        Task<bool> activateUserByIdAsync(int userId);
     }
 }
