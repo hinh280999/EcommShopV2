@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EcommShop.Contracts.Dtos.Brand;
+using EcommShop.Contracts.Dtos.Category;
 using EcommShop.Contracts.Dtos.User;
 using EcommShop.DataAccessor.Entities;
 
@@ -16,6 +17,10 @@ namespace ECommShop.Business
             CreateMap<Brand, BrandInfoDto>();
 
             CreateMap<BrandInfoDto, Brand>();
+
+            CreateMap<Category, CategoryInfoDto>();
+
+            CreateMap<CategoryInfoDto, Category>();
         }
     }
 }

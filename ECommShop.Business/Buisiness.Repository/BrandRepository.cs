@@ -47,7 +47,7 @@ namespace ECommShop.Business.Buisiness.Repository
             if (ExistBrand == null) throw new Exception("No brand found");
 
             var productInBrand = await _dbContext.Products.FirstOrDefaultAsync(x => x.BrandId == id);
-            if (productInBrand != null) throw new Exception("There is some products in this Brand:");
+            if (productInBrand != null) throw new Exception("There is product in this Brand:");
 
            _dbContext.Brands.Remove(ExistBrand);
             await _dbContext.SaveChangesAsync();

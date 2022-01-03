@@ -49,20 +49,18 @@ namespace EcomShopVers2
                         };
                     });
 
-            
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EcomShopVers2", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-                 {
-                     Name = "Authorization",
-                     Type = SecuritySchemeType.ApiKey,
-                     Scheme = "Bearer",
-                     BearerFormat = "JWT",
-                     In = ParameterLocation.Header,
-                     Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
-                 });
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
+                });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -82,7 +80,8 @@ namespace EcomShopVers2
             services.AddTransient<IAuthRepository, AuthRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IBrandRepository, BrandRepository>();
-            
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
             services.AddScoped<TokenHelpers>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }
