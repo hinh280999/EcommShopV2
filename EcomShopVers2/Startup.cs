@@ -79,8 +79,10 @@ namespace EcomShopVers2
                 });
             });
 
-            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthRepository, AuthRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IBrandRepository, BrandRepository>();
+            
             services.AddScoped<TokenHelpers>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }
