@@ -64,8 +64,8 @@ namespace EcomShopVers2.Controllers
         {
             try
             {
-                var brandInfo = await _brandRepository.deleteBrandAsync(id);
-                return Ok();
+                var result = await _brandRepository.deleteBrandAsync(id);
+                return Ok(result);
             }
             catch (Exception e)
             {
