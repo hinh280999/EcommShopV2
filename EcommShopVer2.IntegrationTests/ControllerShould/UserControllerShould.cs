@@ -37,8 +37,6 @@ namespace EcommShopVer2.IntegrationTests.ControllerShould
 
             _userRepository = new UserRepository(_dbContext, _mapper);
             usersController = new UsersController(_userRepository);
-
-
         }
 
         [Fact]

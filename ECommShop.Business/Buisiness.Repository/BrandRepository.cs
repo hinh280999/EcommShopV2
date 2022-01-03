@@ -77,6 +77,7 @@ namespace ECommShop.Business.Buisiness.Repository
 
             if (ExistBrand == null) throw new Exception("No brand found");
 
+            ExistBrand.UpdatedTime = DateTime.Now;
             await _dbContext.SaveChangesAsync();
 
             var BrandInfo = _mapper.Map<BrandInfoDto>(ExistBrand);

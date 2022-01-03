@@ -31,7 +31,7 @@ namespace EcomShopVers2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateBrandAsync(string brandName)
+        public async Task<IActionResult> CreateBrandAsync(string brandName)
         {
             try
             {
@@ -45,9 +45,8 @@ namespace EcomShopVers2.Controllers
 
         }
 
-
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateBrand(int id, string brandName)
+        public async Task<IActionResult> UpdateBrand(int id, string brandName)
         {
             try
             {
@@ -61,7 +60,7 @@ namespace EcomShopVers2.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteBrand(int id)
+        public async Task<IActionResult> DeleteBrand(int id)
         {
             try
             {
