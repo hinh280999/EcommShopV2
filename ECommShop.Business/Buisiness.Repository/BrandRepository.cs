@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ECommShop.Business.Buisiness.Repository
@@ -47,7 +46,8 @@ namespace ECommShop.Business.Buisiness.Repository
 
             if (ExistBrand == null) throw new Exception("No brand found");
 
-            if (ExistBrand.Products.Count > 0) throw new Exception("There is some products in this Brand:");
+            var productInBrand = await _dbContext.Products.FirstOrDefaultAsync(x => x.BrandId == id);
+            if (productInBrand != null) throw new Exception("There is some products in this Brand:");
 
            _dbContext.Brands.Remove(ExistBrand);
             await _dbContext.SaveChangesAsync();
@@ -77,6 +77,7 @@ namespace ECommShop.Business.Buisiness.Repository
 
             if (ExistBrand == null) throw new Exception("No brand found");
 
+            ExistBrand.Name = name;
             ExistBrand.UpdatedTime = DateTime.Now;
             await _dbContext.SaveChangesAsync();
 

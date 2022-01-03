@@ -51,7 +51,7 @@ namespace EcomShopVers2.Controllers
             try
             {
                 var brandInfo = await _brandRepository.updateBrandAsync(id, brandName);
-                return Ok();
+                return Ok(brandInfo);
             }
             catch (Exception e)
             {
